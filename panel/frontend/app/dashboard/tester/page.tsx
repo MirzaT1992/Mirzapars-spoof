@@ -99,10 +99,15 @@ export default function TesterPage() {
     navigator.clipboard.writeText(ips);
   };
 
-  const handleApplyToConfig = async () => {
-    const ips = results.filter(r => r.passed).map(r => r.ip).join("\n");
-    await navigator.clipboard.writeText(ips);
-    alert("Passed IPs copied! Go to Tunnels → select instance → Spoof IPs tab to paste them.");
+  const handleDownloadPassedIPs = () => {
+    const ips = results.filter(r => r.passed).map(r => r.ip).join("\n") + "\n";
+    const blob = new Blob([ips], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "spoof-ips.txt";
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   const results = state.results || [];
@@ -311,11 +316,8 @@ export default function TesterPage() {
                 <button className="btn btn-ghost" onClick={handleCopyPassedIPs} style={{ fontSize: 12 }}>
                   📋 Copy Passed IPs
                 </button>
-                <a className="btn btn-ghost" href={api.testerDownloadUrl()} download style={{ fontSize: 12, textDecoration: "none" }}>
+                <button className="btn btn-ghost" onClick={handleDownloadPassedIPs} style={{ fontSize: 12 }}>
                   📥 Download spoof-ips.txt
-                </a>
-                <button className="btn btn-success" onClick={handleApplyToConfig} style={{ fontSize: 12 }}>
-                  ✅ Apply to Tunnel Config
                 </button>
               </div>
 
