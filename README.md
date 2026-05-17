@@ -1,4 +1,4 @@
-# Spoof Tunnel
+# Spoof Tunnel-Mirza
 [Persian-فارسی](README-fa.md)
 
 Spoof Tunnel is a Layer 3/Layer 4 tunneling proxy designed to bypass Deep Packet Inspection (DPI) and strict stateful firewalls through **mutual bidirectional IP spoofing**.
